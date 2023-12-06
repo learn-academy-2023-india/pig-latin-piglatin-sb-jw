@@ -1,25 +1,17 @@
-import React, { useState } from "react"
-import "./App.css"
-import butcherPigImage from "./assets/butcherPig.jpeg"
+import React, { useState } from "react";
+import "./App.css";
+import butcherPigImage from "./assets/butcherPig.jpeg";
 
 const App = () => {
-  // ACTION ITEM: to make the development process easier there are some preassigned words in the input field, when you are ready for your full user experience delete the test words passed to useState and pass an empty string
   const [userInput, setUserInput] = useState(
     "apple through queen squeal fry fluent"
-  )
-  const [inputTranslated, setInputTranslated] = useState("")
+  );
+  const [inputTranslated, setInputTranslated] = useState("");
 
-  // ACTION ITEM: the "myPigLatinCodeHere" function is where you will put your logic to translate the sentence entered by the user into Pig Latin
   const myPigLatinCodeHere = () => {
-    // NO MODIFICATION NEEDED: the variable "arrayOfUserInput" will contain the text input from the user split into an array of words
-    const arrayOfUserInput = userInput.split(" ")
-    console.log("arrayOfUserInput:", arrayOfUserInput)
+    const arrayOfUserInput = userInput.split(" ");
 
-    // NO MODIFICATION NEEDED: now that we have an array of words, we can map over the array and look at each word
     const translatedWordsArray = arrayOfUserInput.map((eachWord) => {
-      console.log("eachWord:", eachWord)
-
-      // NO MODIFICATION NEEDED: this code will look at each word and identify the vowels
       const vowelsArray = eachWord.split("").filter((vowel) => {
         return (
           vowel === "a" ||
@@ -27,40 +19,53 @@ const App = () => {
           vowel === "i" ||
           vowel === "o" ||
           vowel === "u"
-        )
-      })
-      console.log("vowelsArray:", vowelsArray)
+        );
+      });
 
-      // ACTION ITEM: your Pig Latin logic goes here!
+      let pigLatinWord = eachWord.toLowerCase(); // Convert the word to lowercase
 
-      // ACTION ITEM: this return will be the output of your Pig Latin'd code
-      return eachWord
-    })
+      if (vowelsArray.length > 0) {
+        pigLatinWord += "yay";
+      } else {
+        const quIndex = eachWord.indexOf("qu");
+        if (quIndex !== -1) {
+          pigLatinWord =
+            eachWord.slice(quIndex + 2) +
+            eachWord.slice(0, quIndex + 2) +
+            "ay";
+        } else {
+          // Use a regular expression to match consecutive consonants correctly
+          const consonantsMatch = eachWord.match(/^[^aeiou]+/);
+          if (consonantsMatch) {
+            const consonants = consonantsMatch[0];
+            pigLatinWord =
+              eachWord.slice(consonants.length) +
+              consonants +
+              "ay";
+          }
+        }
+      }
 
-    // NO MODIFICATION NEEDED: once the code has been modified it gets joined from an array back to a string
-    const translatedWords = translatedWordsArray.join(" ")
-    console.log("translatedWords:", translatedWords)
+      return pigLatinWord;
+    });
 
-    // NO MODIFICATION NEEDED: this will update the inputTranslated variable in state
-    setInputTranslated(translatedWords)
-  }
+    const translatedWords = translatedWordsArray.join(" ");
+    setInputTranslated(translatedWords);
+  };
 
-  // ACTION ITEM: this method restarts the game by setting the original state, when you are ready for your full user experience delete the test words in setUserInput and pass an empty string
   const restartGame = () => {
-    setUserInput("apple through queen squeal fry fluent")
-    setInputTranslated("")
-  }
+    setUserInput("apple through queen squeal fry fluent");
+    setInputTranslated("");
+  };
 
-  // NO MODIFICATION NEEDED: this method prevents React from refreshing the page unnecessarily
   const setUpPreventDefault = (e) => {
-    e.preventDefault()
-    myPigLatinCodeHere()
-  }
+    e.preventDefault();
+    myPigLatinCodeHere();
+  };
 
-  // NO MODIFICATION NEEDED: this method takes the value of the input and saves it in state
   const handleInput = (e) => {
-    setUserInput(e.target.value)
-  }
+    setUserInput(e.target.value);
+  };
 
   return (
     <div className="page-container">
@@ -88,7 +93,7 @@ const App = () => {
       </div>
       <footer>&copy; 2023 | Coded by: Your Names Here!</footer>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
