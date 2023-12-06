@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
-import butcherPigImage from "./assets/butcherPig.jpeg";
+import butcherPigImage from "./assets/giphy.gif";
+import banner from "./assets/Pig Latin.png"
 
 const App = () => {
   const [userInput, setUserInput] = useState(
@@ -10,43 +11,55 @@ const App = () => {
 
   const myPigLatinCodeHere = () => {
     const arrayOfUserInput = userInput.split(" ");
+    // Splits user input into an array of words
 
     const translatedWordsArray = arrayOfUserInput.map((eachWord) => {
-      const vowelsArray = eachWord.split("").filter((vowel) => {
-        return (
-          vowel === "a" ||
-          vowel === "e" ||
-          vowel === "i" ||
-          vowel === "o" ||
-          vowel === "u"
-        );
-      });
+      // const translatedWordsArray:
+            // Creates a variable named translatedWordsArray.  Results from .map go here
+      // arrayOfUserInput.map((eachWord):
+            // using the map method.  Map is for changing each element within an array
+            // based on the functions being used.
+      
+      const lowerCaseWord = eachWord.toLowerCase();
+      // Convert the word to lowercase
 
-      let pigLatinWord = eachWord.toLowerCase(); // Convert the word to lowercase
+      const startsWithVowel = /^[aeiou]/.test(lowerCaseWord);
+      // Check if the word starts with a vowel
+      //This gave us hell for a while.  Eventually realized we were saying
+      //"If a word has a vowel in it, add yay"
+      //What we wanted was "if the word starts with a vowel"
 
-      if (vowelsArray.length > 0) {
-        pigLatinWord += "yay";
-      } else {
-        const quIndex = eachWord.indexOf("qu");
-        if (quIndex !== -1) {
+
+      let pigLatinWord = lowerCaseWord;
+
+      if (startsWithVowel) {
+        pigLatinWord += "yay";  // If a word starts with a vowel, add yay at the end
+      } else {    //Otherwise....
+        const quIndex = lowerCaseWord.indexOf("qu");
+        if (quIndex !== -1) { //If qu is present in a word, do the following...
           pigLatinWord =
-            eachWord.slice(quIndex + 2) +
-            eachWord.slice(0, quIndex + 2) +
-            "ay";
-        } else {
+            lowerCaseWord.slice(quIndex + 2) + 
+            lowerCaseWord.slice(0, quIndex + 2) +
+            "ay"; // Moves "qu" and everything behind it to the end of the word
+                  // then adds "ay" to the very end of the word
+
+        } else { //Otherwise.........
           // Use a regular expression to match consecutive consonants correctly
-          const consonantsMatch = eachWord.match(/^[^aeiou]+/);
-          if (consonantsMatch) {
+          const consonantsMatch = lowerCaseWord.match(/^[^aeiou]+/);
+          // if the first letter or more of a word is not a vowel
+          // Add to consonantsMatch
+          if (consonantsMatch) { //If a word was added
             const consonants = consonantsMatch[0];
             pigLatinWord =
-              eachWord.slice(consonants.length) +
+              lowerCaseWord.slice(consonants.length) +
               consonants +
-              "ay";
+              "ay"; // Move the consonents at the beginning to the end, add "ay"
           }
         }
       }
 
-      return pigLatinWord;
+
+      return pigLatinWord;  // Give us the magic spelling
     });
 
     const translatedWords = translatedWordsArray.join(" ");
@@ -70,11 +83,18 @@ const App = () => {
   return (
     <div className="page-container">
       <div className="body-container">
-        <h1>Pig Latin Translator</h1>
+        <img
+          src={banner} // Replace with the actual path or URL of your banner image
+          alt="Your Banner Alt Text"
+          style={{ width: '100%', height: 'auto' }} // Adjust the width and height accordingly
+        />
+        {/* <h1>Pig Latin Translator</h1> */}
         <img
           src={butcherPigImage}
           alt="drawing of pig with butcher cut names in pig latin"
           className="butcher-pig-image"
+          style={{ width: '700px', height: '400px' }} // Adjust the width and height accordingly
+
         />
 
         <div className="input-section">
@@ -89,11 +109,24 @@ const App = () => {
           <button onClick={setUpPreventDefault}>Submit</button>
           <button onClick={restartGame}>Clear</button>
         </div>
-        <p>{inputTranslated}</p>
+        {/* Render the translated output as a hyperlink */}
+<p>
+  <a href="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+    {inputTranslated}
+  </a>
+</p>
+
+{/* Display the information about clicking the link */}
+{inputTranslated && (
+  <h2>For More Information, Click the Link Above!</h2>
+)}
+
+        {/* <p>{inputTranslated}</p> */}
       </div>
-      <footer>&copy; 2023 | Coded by: Your Names Here!</footer>
+      <footer>&copy; 2023 | Coded by: Shawn n' Jamar!</footer>
     </div>
   );
 };
 
 export default App;
+
