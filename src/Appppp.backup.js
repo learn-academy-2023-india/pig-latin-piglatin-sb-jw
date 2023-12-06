@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import butcherPigImage from "./assets/giphy.gif";
-import banner from "./assets/Pig Latin.png"
+import butcherPigImage from "./assets/butcherPig.jpeg";
 
 const App = () => {
   const [userInput, setUserInput] = useState(
@@ -83,12 +82,7 @@ const App = () => {
   return (
     <div className="page-container">
       <div className="body-container">
-        <img
-          src={banner} // Replace with the actual path or URL of your banner image
-          alt="Your Banner Alt Text"
-          style={{ width: '100%', height: 'auto' }} // Adjust the width and height accordingly
-        />
-        {/* <h1>Pig Latin Translator</h1> */}
+        <h1>Pig Latin Translator</h1>
         <img
           src={butcherPigImage}
           alt="drawing of pig with butcher cut names in pig latin"
@@ -109,19 +103,7 @@ const App = () => {
           <button onClick={setUpPreventDefault}>Submit</button>
           <button onClick={restartGame}>Clear</button>
         </div>
-        {/* Render the translated output as a hyperlink */}
-<p>
-  <a href="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
-    {inputTranslated}
-  </a>
-</p>
-
-{/* Display the information about clicking the link */}
-{inputTranslated && (
-  <h2>For More Information, Click the Link Above!</h2>
-)}
-
-        {/* <p>{inputTranslated}</p> */}
+        <p>{inputTranslated}</p>
       </div>
       <footer>&copy; 2023 | Coded by: Shawn n' Jamar!</footer>
     </div>
@@ -130,3 +112,45 @@ const App = () => {
 
 export default App;
 
+
+
+
+
+
+
+
+
+/* ---BODY--- */
+
+
+button {
+  border-radius: 0.9rem;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.body-container {
+  padding-bottom: 3rem;
+}
+
+.page-container {
+  min-height: 100vh;
+  position: relative;
+}
+
+.input-section {
+  background-color: grey;
+  border-radius: 0.5rem;
+  color: #fff;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.user-input {
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  height: 3rem;
+  width: 30rem;
+}
+
+/* ---FOOTER--- */
